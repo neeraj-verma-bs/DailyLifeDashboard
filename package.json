@@ -1,0 +1,12 @@
+{
+  "name": "daily-life-dashboard",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Tag-based personal control panel — monorepo root",
+  "scripts": {
+    "dev:backend": "npm --prefix dldb-backend run dev",
+    "dev:frontend": "npm --prefix dldb-frontend run dev",
+    "build:backend": "npm --prefix dldb-backend run build",
+    "build:frontend": "npm --prefix dldb-frontend run build"
+  }
+}

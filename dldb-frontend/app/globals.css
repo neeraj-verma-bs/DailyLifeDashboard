@@ -1,0 +1,174 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg-primary: #07091A;
+  --color-bg-secondary: #0B0E1F;
+  --color-surface: #111827;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-text-primary: #EEF2FF;
+  --color-text-secondary: #8892B0;
+  --color-accent-primary: #818CF8;
+  --color-accent-secondary: #34D399;
+  --color-gradient-primary-from: #818CF8;
+  --color-gradient-primary-to: #A78BFA;
+  --radius-card: 16px;
+  --radius-xl: 20px;
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+html, body {
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+html {
+  color-scheme: dark;
+}
+
+/* ── Glass utilities ── */
+.glass-card {
+  background: rgba(255, 255, 255, 0.035);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.glass-sidebar {
+  background: rgba(7, 9, 26, 0.7);
+  backdrop-filter: blur(32px) saturate(180%);
+  -webkit-backdrop-filter: blur(32px) saturate(180%);
+  border-right: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+/* ── Clay button ── */
+.clay-btn {
+  background: linear-gradient(145deg, #818CF8 0%, #6366F1 55%, #5B5CE8 100%);
+  box-shadow:
+    0 8px 20px rgba(99, 102, 241, 0.45),
+    0 2px 4px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.12);
+  border: none;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.clay-btn:hover:not(:disabled) {
+  box-shadow:
+    0 12px 28px rgba(99, 102, 241, 0.55),
+    0 4px 8px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  transform: translateY(-1px) scale(1.01);
+}
+.clay-btn:active:not(:disabled) {
+  transform: translateY(0) scale(0.99);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+.clay-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ── Shared control height — inputs, selects, and buttons all 36px ── */
+.input-glass,
+.select-glass,
+.clay-btn,
+.btn-ghost {
+  height: 36px;
+}
+
+/* ── Glass inputs ── */
+.input-glass {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--color-text-primary);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+.input-glass::placeholder { color: var(--color-text-secondary); opacity: 0.7; }
+.input-glass:focus {
+  outline: none;
+  border-color: rgba(129, 140, 248, 0.7);
+  box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.15);
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.select-glass {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--color-text-primary);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.select-glass:focus {
+  outline: none;
+  border-color: rgba(129, 140, 248, 0.7);
+  box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.15);
+}
+.select-glass option { background-color: #0f1327; color: var(--color-text-primary); }
+
+/* ── Ghost / secondary button ── */
+.btn-ghost {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: var(--color-text-secondary);
+  transition: all 0.15s ease;
+}
+.btn-ghost:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(255, 255, 255, 0.28);
+  color: var(--color-text-primary);
+}
+.btn-ghost:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ── Mobile: allow taller QuickAddBar controls ── */
+@media (max-width: 639px) {
+  .input-glass,
+  .select-glass {
+    min-width: 0;
+  }
+}
+
+/* ── Landing page animations ── */
+@keyframes float-a {
+  0%, 100% { transform: translateY(0px) rotate(-3deg); }
+  50%       { transform: translateY(-18px) rotate(-3deg); }
+}
+@keyframes float-b {
+  0%, 100% { transform: translateY(-8px) rotate(2deg); }
+  50%       { transform: translateY(10px) rotate(2deg); }
+}
+@keyframes float-c {
+  0%, 100% { transform: translateY(4px) rotate(-1deg); }
+  50%       { transform: translateY(-14px) rotate(-1deg); }
+}
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse-ring {
+  0%   { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+.float-a { animation: float-a 7s ease-in-out infinite; }
+.float-b { animation: float-b 5.5s ease-in-out infinite; }
+.float-c { animation: float-c 6.5s ease-in-out infinite 0.8s; }
+.marquee  { animation: marquee 35s linear infinite; }
+.fade-up  { animation: fade-up 0.6s ease-out both; }
+
+/* ── Skeleton shimmer ── */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.03) 25%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.03) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s ease-in-out infinite;
+}

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Check, Plus, Circle, Bell, Target, Zap, ChevronRight } from "lucide-react";
+import { ArrowRight, Check, Plus, Circle, Bell, Target, Zap, ChevronRight, Wind } from "lucide-react";
 
 /* ─── tiny reusable pieces ─────────────────────────────────── */
 
@@ -153,6 +153,8 @@ const MARQUEE_ITEMS = [
   { text: "Smart alerts", color: "#818CF8" },
   { text: "Daily snapshots", color: "#F59E0B" },
   { text: "Export CSV", color: "#8892B0" },
+  { text: "Breathing exercises", color: "#06B6D4" },
+  { text: "Meditation timer", color: "#06B6D4" },
 ];
 
 function MarqueeStrip() {
@@ -358,6 +360,75 @@ function BentoGrid() {
         </div>
       </div>
 
+      {/* 6 — Wellbeing (2×1) */}
+      <div
+        className="lg:col-span-2 rounded-2xl p-4 flex flex-col relative overflow-hidden"
+        style={{
+          background: "rgba(255,255,255,0.03)",
+          border: "1px solid rgba(6,182,212,0.15)",
+        }}
+      >
+        <div className="absolute top-0 left-0 right-0 h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(6,182,212,0.4), transparent)" }} />
+        <div className="absolute -bottom-8 -right-8 w-32 h-32 rounded-full blur-3xl" style={{ background: "rgba(6,182,212,0.07)" }} />
+
+        <div className="flex items-center gap-2 mb-3 relative">
+          <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: "rgba(6,182,212,0.15)" }}>
+            <Wind className="w-3.5 h-3.5" style={{ color: "#06B6D4" }} />
+          </div>
+          <span className="text-sm font-semibold">Wellbeing</span>
+        </div>
+
+        <div className="flex items-center gap-4 flex-1 relative">
+          {/* Breathing orb */}
+          <div className="relative shrink-0 flex items-center justify-center" style={{ width: 72, height: 72 }}>
+            <div className="absolute inset-0 rounded-full" style={{ background: "rgba(6,182,212,0.06)", border: "1px solid rgba(6,182,212,0.15)" }} />
+            <div
+              className="rounded-full flex items-center justify-center"
+              style={{
+                width: 50, height: 50,
+                background: "radial-gradient(circle, rgba(6,182,212,0.18) 0%, rgba(6,182,212,0.04) 100%)",
+                border: "1.5px solid rgba(6,182,212,0.35)",
+                boxShadow: "0 0 18px rgba(6,182,212,0.18)",
+              }}
+            >
+              <span className="text-[11px] font-bold" style={{ color: "#06B6D4" }}>4s</span>
+            </div>
+          </div>
+
+          {/* Phase pills + progress */}
+          <div className="flex-1 min-w-0">
+            <p className="text-[9px] uppercase tracking-widest mb-2" style={{ color: "rgba(136,146,176,0.45)" }}>Box Breathing</p>
+            <div className="grid grid-cols-4 gap-1 mb-2">
+              {[
+                { label: "Inhale", active: true },
+                { label: "Hold", active: false },
+                { label: "Exhale", active: false },
+                { label: "Hold", active: false },
+              ].map(({ label, active }, i) => (
+                <div
+                  key={i}
+                  className="rounded-lg py-1.5 text-center"
+                  style={
+                    active
+                      ? { background: "rgba(6,182,212,0.15)", border: "1px solid rgba(6,182,212,0.3)" }
+                      : { background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }
+                  }
+                >
+                  <p className="text-[8px] font-semibold leading-tight" style={{ color: active ? "#06B6D4" : "rgba(136,146,176,0.45)" }}>{label}</p>
+                  <p className="text-[8px] leading-tight" style={{ color: active ? "rgba(6,182,212,0.6)" : "rgba(136,146,176,0.25)" }}>4s</p>
+                </div>
+              ))}
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="flex-1 h-1 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.07)" }}>
+                <div className="h-full rounded-full" style={{ width: "25%", background: "linear-gradient(90deg, #06B6D4, #0891B2)" }} />
+              </div>
+              <span className="text-[9px] shrink-0" style={{ color: "rgba(136,146,176,0.4)" }}>Meditation · 5 min</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   );
 }
@@ -367,7 +438,7 @@ function BentoGrid() {
 function StatsRow() {
   const items = [
     { value: "< 5s", label: "to log anything", color: "#818CF8" },
-    { value: "6", label: "powerful modules", color: "#34D399" },
+    { value: "7", label: "powerful modules", color: "#34D399" },
     { value: "100%", label: "private — your data", color: "#F59E0B" },
   ];
   return (

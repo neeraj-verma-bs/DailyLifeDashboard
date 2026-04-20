@@ -10,6 +10,7 @@ import {
   Target,
   Bell,
   UserCircle,
+  Wind,
 } from "lucide-react";
 
 const cardStyle = {
@@ -120,6 +121,22 @@ const SECTIONS = [
       "A second alert fires if you go over budget entirely.",
       "Click any notification to mark it as read, or use 'Mark all read' at the top.",
       "The bell icon in the sidebar shows a badge with your unread count.",
+    ],
+  },
+  {
+    icon: Wind,
+    color: "#06B6D4",
+    title: "Wellbeing",
+    summary: "Breathing exercises and meditation timer to help you reset and focus.",
+    tips: [
+      "Open Wellbeing from the sidebar to access the breathing and meditation tools.",
+      "Choose a breathing pattern — Box (4·4·4·4), 4-7-8, Calm, Energise, Physio Sigh, or Resonance.",
+      "The animated orb expands and contracts in sync with each phase — just follow it.",
+      "Each pattern shows its phase breakdown and benefit so you can pick the one that suits your mood.",
+      "Switch to the Meditation tab to set a timed silent session — pick from 1, 3, 5, 10, 15, or 20 minutes.",
+      "The meditation ring fills as time passes; a sound plays when the session ends.",
+      "Use the Reset button at any time to stop and start fresh.",
+      "Tips for each tool appear in the left panel — read them before your first session.",
     ],
   },
   {

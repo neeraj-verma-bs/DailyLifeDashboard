@@ -2,6 +2,9 @@ import { api } from "@/lib/api";
 import type { AuthUser } from "./authSlice";
 import { setUser } from "@/features/auth/authSlice";
 import type { LoginInput, RegisterInput } from "./schema";
+import { clearTokens, storeTokens } from "@/lib/tokenStorage";
+
+type AuthResponse = { user: AuthUser; accessToken: string; refreshToken: string };
 
 export const authApi = api.injectEndpoints({
   endpoints: (build) => ({
@@ -12,16 +15,26 @@ export const authApi = api.injectEndpoints({
     }),
     login: build.mutation<AuthUser, LoginInput>({
       query: (body) => ({ url: "/auth/login", method: "POST", body }),
-      transformResponse: (res: { user: AuthUser }) => res.user,
+      transformResponse: (res: AuthResponse) => {
+        storeTokens(res.accessToken, res.refreshToken);
+        return res.user;
+      },
       invalidatesTags: ["User", "Tag", "Entry", "Dashboard"],
     }),
     register: build.mutation<AuthUser, RegisterInput>({
       query: (body) => ({ url: "/auth/register", method: "POST", body }),
-      transformResponse: (res: { user: AuthUser }) => res.user,
+      transformResponse: (res: AuthResponse) => {
+        storeTokens(res.accessToken, res.refreshToken);
+        return res.user;
+      },
       invalidatesTags: ["User", "Tag", "Entry", "Dashboard"],
     }),
     logout: build.mutation<{ ok: true }, void>({
       query: () => ({ url: "/auth/logout", method: "POST" }),
+      transformResponse: (res: { ok: true }) => {
+        clearTokens();
+        return res;
+      },
       invalidatesTags: ["User", "Tag", "Entry", "Dashboard"],
     }),
     updateMe: build.mutation<AuthUser, { name?: string; email?: string }>({

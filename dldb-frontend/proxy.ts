@@ -5,9 +5,7 @@ const AUTH_ONLY = ["/login", "/register"];
 
 export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
-  const hasAuth = req.cookies.get("auth");
-  const hasRefresh = req.cookies.get("refresh");
-  const authenticated = Boolean(hasAuth || hasRefresh);
+  const authenticated = Boolean(req.cookies.get("isLoggedIn"));
 
   if (PROTECTED.some((p) => pathname === p || pathname.startsWith(`${p}/`))) {
     if (!authenticated) {

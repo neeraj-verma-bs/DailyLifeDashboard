@@ -1,10 +1,10 @@
 import type { RequestHandler } from "express";
 import { verifyAccessToken } from "../lib/tokens.js";
-import { cookieNames } from "../lib/cookies.js";
 import { UnauthorizedError } from "../lib/errors.js";
 
 export const requireAuth: RequestHandler = (req, _res, next) => {
-  const token = req.cookies?.[cookieNames.ACCESS_COOKIE];
+  const header = req.headers.authorization;
+  const token = header?.startsWith("Bearer ") ? header.slice(7) : undefined;
   if (!token) return next(new UnauthorizedError("Missing access token"));
   try {
     const decoded = verifyAccessToken(token);

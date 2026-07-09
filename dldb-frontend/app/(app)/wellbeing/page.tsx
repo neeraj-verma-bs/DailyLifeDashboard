@@ -80,6 +80,41 @@ const TIPS: Record<"breathing" | "meditation", string[]> = {
   ],
 };
 
+/* ─── Completion chime (Web Audio API, no file needed) ──────── */
+
+function playCompletionChime() {
+  if (typeof window === "undefined") return;
+  try {
+    type AudioCtxCtor = typeof AudioContext;
+    const Ctor: AudioCtxCtor =
+      window.AudioContext ??
+      (window as unknown as { webkitAudioContext: AudioCtxCtor }).webkitAudioContext;
+    const ctx = new Ctor();
+    // C5 → E5 → G5 ascending arpeggio — soft and warm
+    const notes: [freq: number, delay: number, peak: number][] = [
+      [523.25, 0,    0.22],
+      [659.25, 0.32, 0.18],
+      [783.99, 0.58, 0.15],
+    ];
+    notes.forEach(([freq, delay, peak]) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.type = "sine";
+      osc.frequency.value = freq;
+      const t = ctx.currentTime + delay;
+      gain.gain.setValueAtTime(0, t);
+      gain.gain.linearRampToValueAtTime(peak, t + 0.04);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 3);
+      osc.start(t);
+      osc.stop(t + 3.1);
+    });
+  } catch {
+    // AudioContext blocked or unsupported
+  }
+}
+
 /* ─── Shared sub-components ──────────────────────────────────── */
 
 function TipsCard({ mode }: { mode: "breathing" | "meditation" }) {
@@ -395,6 +430,8 @@ function MeditationTimer() {
   }, [running, totalSecs]);
 
   useEffect(() => { reset(); }, [duration, reset]);
+
+  useEffect(() => { if (finished) playCompletionChime(); }, [finished]);
 
   const offset = RING_C * (1 - Math.min(1, Math.max(0, progress)));
 
